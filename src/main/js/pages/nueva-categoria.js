@@ -3,7 +3,7 @@ const client = require('../client');
 const { Link } = require('react-router-dom');
 const { useState } = require('react');
 
-const PageNuevoMusico = () => {
+const PageNuevaCategoria = () => {
 
     const [nombre, setNombre] = useState('');
 
@@ -11,7 +11,7 @@ const PageNuevoMusico = () => {
         event.preventDefault();
         client({
             method: 'POST',
-            path: '/api/musicos',
+            path: '/api/categorias',
             entity: { nombre: nombre },
             headers: { 'Content-Type': 'application/json' }
         }).done(() => {
@@ -21,15 +21,15 @@ const PageNuevoMusico = () => {
 
     return (
         <>
-            <h1>Nuevo Músico</h1>
+            <h1>Nueva Categoria</h1>
             <form onSubmit={handleSubmit}>
                 <label>Nombre</label>
                 <input type="text" id="nombre" name="nombre" onChange={(e)=>setNombre(e.target.value)} />
-                <input type="submit" value="Nuevo Músico" />
+                <input type="submit" value="Nueva Categoria" />
             </form>
             <Link to="/">Volver</Link>
         </>
     )
 }
 
-module.exports = PageNuevoMusico;
+module.exports = PageNuevaCategoria;
