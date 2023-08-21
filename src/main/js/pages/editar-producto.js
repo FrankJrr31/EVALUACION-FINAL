@@ -45,19 +45,7 @@ const PageEditarProducto = ()=>{
                     name="precio"
                     value={producto.precio}
                     onChange={(e)=>{setProducto({...producto, precio: e.target.value})}} />
-                <label>Stock</label>
-                <input 
-                    type="number"
-                    name="stock"
-                    value={producto.stock}
-                    onChange={(e)=>{setProducto({...producto, stock: e.target.value})}} />
-                <input 
-                    type="text"
-                    name="categoria"
-                    value={producto.categoria}
-                    onChange={(e)=>{setProducto({...producto, categoria: e.target.value})}} />
-                <br/>
-                <input type='submit' value={`Editar Musico ${id}`} />
+                <input type='submit' value={`Editar Producto ${id}`} />
             </form>
             <Link to="/">Volver</Link>
         </>

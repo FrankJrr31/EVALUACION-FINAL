@@ -40801,7 +40801,7 @@ var _require = __webpack_require__(/*! react-router-dom */ "./node_modules/react
   RouterProvider = _require.RouterProvider;
 var PageHome = __webpack_require__(/*! ./pages/home */ "./src/main/js/pages/home.js");
 var NuevoProductoPage = __webpack_require__(/*! ./pages/nuevo-producto */ "./src/main/js/pages/nuevo-producto.js");
-var PageNuevaCategoria = __webpack_require__(/*! ./pages/nueva-categoria */ "./src/main/js/pages/nueva-categoria.js");
+var PageNuevaCategoria = __webpack_require__(/*! ./pages/nueva-venta */ "./src/main/js/pages/nueva-venta.js");
 var PageEditarProducto = __webpack_require__(/*! ./pages/editar-producto */ "./src/main/js/pages/editar-producto.js");
 var router = createBrowserRouter([{
   path: '/',
@@ -40810,8 +40810,8 @@ var router = createBrowserRouter([{
   path: '/nuevo-producto',
   element: /*#__PURE__*/React.createElement(NuevoProductoPage, null)
 }, {
-  path: '/nuevo-categoria',
-  element: /*#__PURE__*/React.createElement(PageNuevaCategoria, null)
+  path: '/nuevo-venta',
+  element: /*#__PURE__*/React.createElement(PageNuevaVenta, null)
 }, {
   path: '/editar-producto/:id',
   element: /*#__PURE__*/React.createElement(PageEditarProducto, null)
@@ -40929,27 +40929,9 @@ var PageEditarProducto = function PageEditarProducto() {
         precio: e.target.value
       }));
     }
-  }), /*#__PURE__*/React.createElement("label", null, "Stock"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    name: "stock",
-    value: producto.stock,
-    onChange: function onChange(e) {
-      setProducto(_objectSpread(_objectSpread({}, producto), {}, {
-        stock: e.target.value
-      }));
-    }
   }), /*#__PURE__*/React.createElement("input", {
-    type: "text",
-    name: "categoria",
-    value: producto.categoria,
-    onChange: function onChange(e) {
-      setProducto(_objectSpread(_objectSpread({}, producto), {}, {
-        categoria: e.target.value
-      }));
-    }
-  }), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
     type: "submit",
-    value: "Editar Musico ".concat(id)
+    value: "Editar Producto ".concat(id)
   })), /*#__PURE__*/React.createElement(Link, {
     to: "/"
   }, "Volver"));
@@ -40991,7 +40973,7 @@ var PageHome = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       productos: [],
-      categorias: []
+      ventas: []
     };
     return _this;
   }
@@ -41009,10 +40991,10 @@ var PageHome = /*#__PURE__*/function (_React$Component) {
       });
       client({
         method: 'GET',
-        path: '/api/categorias'
+        path: '/api/ventas'
       }).done(function (response) {
         _this2.setState({
-          categorias: response.entity._embedded.categorias
+          ventas: response.entity._embedded.ventas
         });
       });
     }
@@ -41040,13 +41022,13 @@ var PageHome = /*#__PURE__*/function (_React$Component) {
           "width": "calc(100% / 3)"
         }
       }, /*#__PURE__*/React.createElement(Titulo, {
-        entidad: "Categorias",
+        entidad: "Ventas",
         emoji: "\uD83C\uDFB5"
       }), /*#__PURE__*/React.createElement(CategoriaList, {
-        categorias: this.state.categorias
+        ventas: this.state.ventas
       }), /*#__PURE__*/React.createElement(Link, {
-        to: "/nueva-categoria"
-      }, "Nueva Categoria"))));
+        to: "/nueva-venta"
+      }, "Nueva Venta"))));
     }
   }]);
   return PageHome;
@@ -41072,33 +41054,33 @@ var ProductoList = /*#__PURE__*/function (_React$Component2) {
       });
       return /*#__PURE__*/React.createElement("table", {
         border: "1"
-      }, /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nombre"), /*#__PURE__*/React.createElement("th", null, "Acciones")), instrumentos));
+      }, /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nombre"), /*#__PURE__*/React.createElement("th", null, "precio"), /*#__PURE__*/React.createElement("th", null, "Acciones")), productos));
     }
   }]);
   return ProductoList;
 }(React.Component);
-var CategoriaList = /*#__PURE__*/function (_React$Component3) {
-  _inherits(CategoriaList, _React$Component3);
-  var _super3 = _createSuper(CategoriaList);
-  function CategoriaList() {
-    _classCallCheck(this, CategoriaList);
+var VentaList = /*#__PURE__*/function (_React$Component3) {
+  _inherits(VentaList, _React$Component3);
+  var _super3 = _createSuper(VentaList);
+  function VentaList() {
+    _classCallCheck(this, VentaList);
     return _super3.apply(this, arguments);
   }
-  _createClass(CategoriaList, [{
+  _createClass(VentaList, [{
     key: "render",
     value: function render() {
-      var categorias = this.props.categorias.map(function (categoria) {
-        return /*#__PURE__*/React.createElement(Categoria, {
-          key: categoria._links.self.href,
-          categoria: categoria
+      var ventas = this.props.ventas.map(function (venta) {
+        return /*#__PURE__*/React.createElement(Venta, {
+          key: venta._links.self.href,
+          venta: venta
         });
       });
       return /*#__PURE__*/React.createElement("table", {
         border: "1"
-      }, /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nombre"), /*#__PURE__*/React.createElement("th", null, "Acciones")), musicos));
+      }, /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "total"), /*#__PURE__*/React.createElement("th", null, "Acciones")), ventas));
     }
   }]);
-  return CategoriaList;
+  return VentaList;
 }(React.Component);
 var Producto = /*#__PURE__*/function (_React$Component4) {
   _inherits(Producto, _React$Component4);
@@ -41111,37 +41093,37 @@ var Producto = /*#__PURE__*/function (_React$Component4) {
     key: "render",
     value: function render() {
       var id = this.props.producto._links.self.href.split("/").slice(-1);
-      return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, this.props.producto.nombre), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(Link, {
+      return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, this.props.producto.nombre), /*#__PURE__*/React.createElement("td", null, this.props.producto.precio), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(Link, {
         to: "/editar-producto/".concat(id)
       }, "Editar")));
     }
   }]);
   return Producto;
 }(React.Component);
-var Categoria = /*#__PURE__*/function (_React$Component5) {
-  _inherits(Categoria, _React$Component5);
-  var _super5 = _createSuper(Categoria);
-  function Categoria() {
-    _classCallCheck(this, Categoria);
+var Venta = /*#__PURE__*/function (_React$Component5) {
+  _inherits(Venta, _React$Component5);
+  var _super5 = _createSuper(Venta);
+  function Venta() {
+    _classCallCheck(this, Venta);
     return _super5.apply(this, arguments);
   }
-  _createClass(Categoria, [{
+  _createClass(Venta, [{
     key: "render",
     value: function render() {
-      var id = this.props.categoria._links.self.href.split("/").slice(-1);
-      return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, this.props.categoria.nombre));
+      var id = this.props.venta._links.self.href.split("/").slice(-1);
+      return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, this.props.venta.total));
     }
   }]);
-  return Categoria;
+  return Venta;
 }(React.Component);
 module.exports = PageHome;
 
 /***/ }),
 
-/***/ "./src/main/js/pages/nueva-categoria.js":
-/*!**********************************************!*\
-  !*** ./src/main/js/pages/nueva-categoria.js ***!
-  \**********************************************/
+/***/ "./src/main/js/pages/nueva-venta.js":
+/*!******************************************!*\
+  !*** ./src/main/js/pages/nueva-venta.js ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -41157,7 +41139,7 @@ var _require = __webpack_require__(/*! react-router-dom */ "./node_modules/react
   Link = _require.Link;
 var _require2 = __webpack_require__(/*! react */ "./node_modules/react/index.js"),
   useState = _require2.useState;
-var PageNuevaCategoria = function PageNuevaCategoria() {
+var PageNuevaVenta = function PageNuevaVenta() {
   var _useState = useState(''),
     _useState2 = _slicedToArray(_useState, 2),
     nombre = _useState2[0],
@@ -41166,7 +41148,7 @@ var PageNuevaCategoria = function PageNuevaCategoria() {
     event.preventDefault();
     client({
       method: 'POST',
-      path: '/api/categorias',
+      path: '/api/Ventas',
       entity: {
         nombre: nombre
       },
@@ -41193,7 +41175,7 @@ var PageNuevaCategoria = function PageNuevaCategoria() {
     to: "/"
   }, "Volver"));
 };
-module.exports = PageNuevaCategoria;
+module.exports = PageNuevaVenta;
 
 /***/ }),
 
@@ -41229,18 +41211,6 @@ var NuevoProductoPage = function NuevoProductoPage() {
     _useState4 = _slicedToArray(_useState3, 2),
     precio = _useState4[0],
     setPrecio = _useState4[1];
-  var _useState5 = useState([]),
-    _useState6 = _slicedToArray(_useState5, 2),
-    stock = _useState6[0],
-    setStock = _useState6[1];
-  var _useState7 = useState([]),
-    _useState8 = _slicedToArray(_useState7, 2),
-    categorias = _useState8[0],
-    setCategorias = _useState8[1];
-  var _useState9 = useState(''),
-    _useState10 = _slicedToArray(_useState9, 2),
-    idCategoria = _useState10[0],
-    setIdCategoria = _useState10[1];
   var handleSubmit = function handleSubmit(evento) {
     evento.preventDefault();
     client({
@@ -41248,9 +41218,7 @@ var NuevoProductoPage = function NuevoProductoPage() {
       path: '/api/productos',
       entity: {
         nombre: nombre,
-        precio: precio,
-        stock: stock,
-        categoria: 'http://localhost:8080/api/categorias/' + idCategoria
+        precio: precio
       },
       headers: {
         'Content-Type': 'application/json'
@@ -41259,21 +41227,6 @@ var NuevoProductoPage = function NuevoProductoPage() {
       window.location = '/';
     });
   };
-  useEffect(function () {
-    client({
-      method: 'GET',
-      path: '/api/categorias'
-    }).done(function (response) {
-      var categorias2 = [];
-      response.entity._embedded.categorias.map(function (categoria) {
-        categorias2.push({
-          value: categoria._links.self.href.split('/').slice(-1),
-          label: categoria.nombre
-        });
-      });
-      setCategorias(categorias2);
-    });
-  }, []);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", null, "Nuevo Producto"), /*#__PURE__*/React.createElement("form", {
     onSubmit: handleSubmit
   }, /*#__PURE__*/React.createElement("label", null, "Nombre"), /*#__PURE__*/React.createElement("input", {
@@ -41290,27 +41243,7 @@ var NuevoProductoPage = function NuevoProductoPage() {
     onChange: function onChange(e) {
       return setPrecio(e.target.value);
     }
-  }), /*#__PURE__*/React.createElement("label", null, "Nombre"), /*#__PURE__*/React.createElement("input", {
-    type: "text",
-    id: "stock",
-    name: "stock",
-    onChange: function onChange(e) {
-      return setStock(e.target.value);
-    }
-  }), /*#__PURE__*/React.createElement("label", {
-    htmlFor: "categoria"
-  }, "Categoria"), /*#__PURE__*/React.createElement("select", {
-    name: "categoria",
-    id: "categoria",
-    onChange: function onChange(e) {
-      setIdCategoria(e.target.value);
-    }
-  }, categorias.map(function (categoria) {
-    return /*#__PURE__*/React.createElement("option", {
-      key: categoria.value,
-      value: categoria.value
-    }, categoria.label);
-  })), /*#__PURE__*/React.createElement("input", {
+  }), /*#__PURE__*/React.createElement("input", {
     type: "submit",
     value: "Nuevo Producto"
   })), /*#__PURE__*/React.createElement(Link, {

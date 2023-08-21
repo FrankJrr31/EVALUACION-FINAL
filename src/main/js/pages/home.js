@@ -5,14 +5,14 @@ const { Link } = require('react-router-dom');
 class PageHome extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {productos: [], categorias: [] };
+		this.state = {productos: [], ventas: []};
 	}
 	componentDidMount() {
 		client({ method: 'GET', path: '/api/productos' }).done(response => {
 			this.setState({ productos: response.entity._embedded.productos });
 		});
-		client({ method: 'GET', path: '/api/categorias' }).done(response => {
-			this.setState({ categorias: response.entity._embedded.categorias });
+		client({ method: 'GET', path: '/api/ventas' }).done(response => {
+			this.setState({ ventas: response.entity._embedded.ventas });
 		});
 
 	}
@@ -28,9 +28,9 @@ class PageHome extends React.Component {
 						<Link to="/nuevo-producto">Nuevo Producto</Link>
 					</div>
 					<div style={{"width": "calc(100% / 3)"}}>
-						<Titulo entidad="Categorias" emoji="🎵" />
-						<CategoriaList categorias={this.state.categorias} />
-						<Link to="/nueva-categoria">Nueva Categoria</Link>
+						<Titulo entidad="Ventas" emoji="🎵" />
+						<CategoriaList ventas={this.state.ventas} />
+						<Link to="/nueva-venta">Nueva Venta</Link>
 					</div>
 				</div>
 			</>
@@ -60,27 +60,28 @@ class ProductoList extends React.Component {
 				<tbody>
 					<tr>
 						<th>Nombre</th>
+						<th>precio</th>
 						<th>Acciones</th>
 					</tr>
-					{instrumentos}
+					{productos}
 				</tbody>
 			</table>
 		)
 	}
 }
-class CategoriaList extends React.Component {
+class VentaList extends React.Component {
 	render() {
-		const categorias = this.props.categorias.map(categoria =>
-			<Categoria key={categoria._links.self.href} categoria={categoria} />
+		const ventas = this.props.ventas.map(venta =>
+			<Venta key={venta._links.self.href} venta={venta} />
 		);
 		return (
 			<table border="1">
 				<tbody>
 					<tr>
-						<th>Nombre</th>
+						<th>total</th>
 						<th>Acciones</th>
 					</tr>
-					{musicos}
+					{ventas}
 				</tbody>
 			</table>
 		)
@@ -93,6 +94,7 @@ class Producto extends React.Component {
 		return (
 			<tr>
 				<td>{this.props.producto.nombre}</td>
+				<td>{this.props.producto.precio}</td>
 				<td>
 					<Link to={`/editar-producto/${id}`}>Editar</Link>
 				</td>
@@ -101,13 +103,12 @@ class Producto extends React.Component {
 	}
 }
 
-class Categoria extends React.Component {
+class Venta extends React.Component {
 	render() {
-		const id = this.props.categoria._links.self.href.split("/").slice(-1);
+		const id = this.props.venta._links.self.href.split("/").slice(-1);
 		return (
 			<tr>
-				<td>{this.props.categoria.nombre}</td>
-
+				<td>{this.props.venta.total}</td>
 			</tr>
 		)
 	}
